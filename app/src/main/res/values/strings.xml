@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MyGPS</string>
+    <string name="coordenadas_iniciales">Coordinadas Iniciales</string>
+    <string name="coordenadas_finales">Coordinadas Finales</string>
+    <string name="detener_geolocalizacion">Detener Geolocalización</string>
+    <string name="latitud">Latitud: </string>
+    <string name="longitud">Longitud: </string>
+    <string name="tiempo">Tiempo transcurrido: </string>
+    <string name="action_settings">Settings</string>
+</resources>
+
