@@ -120,5 +120,17 @@
             android:layout_marginTop="50dp"
             android:id="@+id/chronometer" />
     </LinearLayout>
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.10" />
 
+    <TextView
+        android:layout_width="346dp"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView"
+        android:layout_weight="0.44" />
 </LinearLayout>

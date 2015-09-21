@@ -5,12 +5,14 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,14 @@ public class MainActivity extends Activity implements LocationListener {
     private boolean sonCoordenadasFinales;
 
     public void obtenerCoordenadasFinales(View view) {
+        TextView et = (TextView) findViewById(R.id.textView);
+        Context context = getBaseContext();
+        boolean estaConectado = Connectivity.isConnected(context);
+        NetworkInfo ni = Connectivity.getNetworkInfo(context);
+        String etString = et.getText().toString();
+        et.setText(String.format("%s\nFINAL => CONECTADO: %s\t CONECTIVIDAD: %s\t TIPO DE RED: %s",
+                etString, estaConectado ? "Si" : "No", ni.getTypeName(), ni.getSubtypeName()));
+
         progress.setTitle("Procesando");
         progress.setMessage("Obteniendo las coordenadas finales");
         progress.show();
@@ -35,6 +45,14 @@ public class MainActivity extends Activity implements LocationListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView et = (TextView) findViewById(R.id.textView);
+        Context context = getBaseContext();
+        boolean estaConectado = Connectivity.isConnected(context);
+        NetworkInfo ni = Connectivity.getNetworkInfo(context);
+
+        et.setText(String.format("INICIAL => CONECTADO: %s\t CONECTIVIDAD: %s\t TIPO DE RED: %s",
+                estaConectado ? "Si" : "No", ni.getTypeName(), ni.getSubtypeName()));
 
         progress = new ProgressDialog(this);
         sonCoordenadasFinales = false;
@@ -66,8 +84,8 @@ public class MainActivity extends Activity implements LocationListener {
             }
 
             if(latitud.getText().equals("") && longitud.getText().equals("")) {
-                latitud.setText(String.format("\t%1$,.6f\t", location.getLatitude()));
-                longitud.setText(String.format("\t%1$,.6f\t", location.getLongitude()));
+                latitud.setText(String.format("\t%1$,.7f\t", location.getLatitude()));
+                longitud.setText(String.format("\t%1$,.7f\t", location.getLongitude()));
             }
 
             if(sonCoordenadasFinales) {
