@@ -24,13 +24,17 @@ public class MainActivity extends Activity implements LocationListener {
 
     public void obtenerCoordenadasFinales(View view) {
         TextView et = (TextView) findViewById(R.id.textView);
-        Context context = getBaseContext();
-        boolean estaConectado = Connectivity.isConnected(context);
-        NetworkInfo ni = Connectivity.getNetworkInfo(context);
         String etString = et.getText().toString();
-        et.setText(String.format("%s\nFINAL => CONECTADO: %s\t CONECTIVIDAD: %s\t TIPO DE RED: %s",
-                etString, estaConectado ? "Si" : "No", ni.getTypeName(), ni.getSubtypeName()));
-
+        try {
+            Context context = getBaseContext();
+            boolean estaConectado = Connectivity.isConnected(context);
+            NetworkInfo ni = Connectivity.getNetworkInfo(context);
+            et.setText(String.format("%s\nFINAL => CONECTADO: %s\t CONECTIVIDAD: %s\t TIPO DE RED: %s",
+                    etString, estaConectado ? "Si" : "No", ni == null ? "No conectado" : ni.getTypeName(),
+                    ni == null ? "Desconocido" : ni.getSubtypeName()));
+        } catch(Exception ex) {
+            et.setText(String.format("%s\nERROR FINAL: %s", etString, ex.getMessage()));
+        }
         progress.setTitle("Procesando");
         progress.setMessage("Obteniendo las coordenadas finales");
         progress.show();
@@ -47,13 +51,17 @@ public class MainActivity extends Activity implements LocationListener {
         setContentView(R.layout.activity_main);
 
         TextView et = (TextView) findViewById(R.id.textView);
-        Context context = getBaseContext();
-        boolean estaConectado = Connectivity.isConnected(context);
-        NetworkInfo ni = Connectivity.getNetworkInfo(context);
+        try {
+            Context context = getBaseContext();
+            boolean estaConectado = Connectivity.isConnected(context);
+            NetworkInfo ni = Connectivity.getNetworkInfo(context);
 
-        et.setText(String.format("INICIAL => CONECTADO: %s\t CONECTIVIDAD: %s\t TIPO DE RED: %s",
-                estaConectado ? "Si" : "No", ni.getTypeName(), ni.getSubtypeName()));
-
+            et.setText(String.format("INICIAL => CONECTADO: %s\t CONECTIVIDAD: %s\t TIPO DE RED: %s",
+                    estaConectado ? "Si" : "No", ni == null ? "No conectado" : ni.getTypeName(),
+                    ni == null ? "Desconocido" : ni.getSubtypeName()));
+        } catch(Exception ex) {
+            et.setText(String.format("ERROR INICIAL: %s", ex.getMessage()));
+        }
         progress = new ProgressDialog(this);
         sonCoordenadasFinales = false;
         Chronometer cronos = (Chronometer) findViewById(R.id.chronometer);
